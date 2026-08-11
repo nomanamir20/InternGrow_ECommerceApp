@@ -51,8 +51,19 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
       );
       await authService.updateDisplayName(_fullNameController.text.trim());
 
+      // Firebase automatically signs the user in upon account creation.
+      // Sign back out so they land on Login instead of skipping straight
+      // into the app — matches the intended flow (create account, then
+      // log in with those credentials).
+      await authService.signOut();
+
       if (!mounted) return;
-      context.go(AppRoutes.home);
+
+      final messenger = ScaffoldMessenger.of(context);
+      context.go(AppRoutes.login);
+      messenger.showSnackBar(
+        const SnackBar(content: Text('Account created! Please log in to continue.')),
+      );
     } on FirebaseAuthException catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
