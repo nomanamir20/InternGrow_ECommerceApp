@@ -11,7 +11,7 @@
 
 ## ✨ Features
 
-- [ ] Product Listing
+- [X] Product Listing
 - [ ] Product Details
 - [ ] Categories
 - [ ] Search
@@ -21,7 +21,7 @@
 - [ ] User Profile
 
 ### Upgrade Features
-- [ ] API Integration (DummyJSON)
+- [X] API Integration (DummyJSON)
 - [ ] Payment Gateway UI
 - [ ] Push Notifications
 - [ ] Order History
