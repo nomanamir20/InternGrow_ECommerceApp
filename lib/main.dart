@@ -1,0 +1,39 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:url_strategy/url_strategy.dart';
+
+import 'core/router/app_router.dart';
+import 'core/theme/app_theme.dart';
+import 'core/theme/theme_provider.dart';
+
+// NOTE: Firebase initialization added in a later step once
+// firebase_options.dart is generated via `flutterfire configure`.
+// import 'package:firebase_core/firebase_core.dart';
+// import 'firebase_options.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  setPathUrlStrategy();
+
+  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  runApp(const ProviderScope(child: InternGrowEcommerceApp()));
+}
+
+class InternGrowEcommerceApp extends ConsumerWidget {
+  const InternGrowEcommerceApp({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(themeProvider);
+
+    return MaterialApp.router(
+      title: 'InternGrow Shop',
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: themeMode,
+      routerConfig: appRouter,
+    );
+  }
+}
