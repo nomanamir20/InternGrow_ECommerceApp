@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/auth/screens/login_screen.dart';
@@ -12,9 +13,13 @@ import '../../features/checkout/screens/checkout_screen.dart';
 import '../../features/profile/screens/profile_screen.dart';
 import '../../features/orders/screens/order_history_screen.dart';
 import '../../shared/widgets/splash_screen.dart';
+import '../../shared/widgets/scaffold_with_nav_bar.dart';
 import 'app_routes.dart';
 
+final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
+
 final GoRouter appRouter = GoRouter(
+  navigatorKey: _rootNavigatorKey,
   initialLocation: AppRoutes.splash,
   routes: [
     GoRoute(
@@ -29,44 +34,82 @@ final GoRouter appRouter = GoRouter(
       path: AppRoutes.signUp,
       builder: (context, state) => const SignUpScreen(),
     ),
-    GoRoute(
-      path: AppRoutes.home,
-      builder: (context, state) => const HomeScreen(),
-    ),
-    GoRoute(
-      path: AppRoutes.categories,
-      builder: (context, state) => const CategoriesScreen(),
-    ),
+
+    // Screens pushed on top of the bottom-nav shell (full-screen, no tabs visible)
     GoRoute(
       path: AppRoutes.search,
+      parentNavigatorKey: _rootNavigatorKey,
       builder: (context, state) => const SearchScreen(),
     ),
     GoRoute(
       path: '${AppRoutes.productDetails}/:id',
+      parentNavigatorKey: _rootNavigatorKey,
       builder: (context, state) {
         final id = int.tryParse(state.pathParameters['id'] ?? '') ?? 0;
         return ProductDetailsScreen(productId: id);
       },
     ),
     GoRoute(
-      path: AppRoutes.wishlist,
-      builder: (context, state) => const WishlistScreen(),
-    ),
-    GoRoute(
-      path: AppRoutes.cart,
-      builder: (context, state) => const CartScreen(),
-    ),
-    GoRoute(
       path: AppRoutes.checkout,
+      parentNavigatorKey: _rootNavigatorKey,
       builder: (context, state) => const CheckoutScreen(),
     ),
     GoRoute(
-      path: AppRoutes.profile,
-      builder: (context, state) => const ProfileScreen(),
-    ),
-    GoRoute(
       path: AppRoutes.orderHistory,
+      parentNavigatorKey: _rootNavigatorKey,
       builder: (context, state) => const OrderHistoryScreen(),
+    ),
+
+    // The 5-tab bottom navigation shell
+    StatefulShellRoute.indexedStack(
+      builder: (context, state, navigationShell) {
+        return ScaffoldWithNavBar(navigationShell: navigationShell);
+      },
+      branches: [
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: AppRoutes.home,
+              builder: (context, state) => const HomeScreen(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: AppRoutes.categories,
+              builder: (context, state) {
+                final category = state.uri.queryParameters['category'];
+                return CategoriesScreen(initialCategory: category);
+              },
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: AppRoutes.wishlist,
+              builder: (context, state) => const WishlistScreen(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: AppRoutes.cart,
+              builder: (context, state) => const CartScreen(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: AppRoutes.profile,
+              builder: (context, state) => const ProfileScreen(),
+            ),
+          ],
+        ),
+      ],
     ),
   ],
 );
