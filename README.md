@@ -13,7 +13,7 @@
 
 - [X] Product Listing
 - [ ] Product Details
-- [ ] Categories
+- [x] Categories
 - [ ] Search
 - [ ] Wishlist
 - [ ] Shopping Cart
