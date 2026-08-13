@@ -27,9 +27,6 @@ class Product {
     required this.images,
   });
 
-  /// Price after applying the discount — DummyJSON only gives the raw
-  /// price and a discount percentage, so this is a derived value used
-  /// throughout the UI (product cards, details, cart).
   double get discountedPrice => price - (price * discountPercentage / 100);
 
   bool get hasDiscount => discountPercentage > 0;
@@ -48,5 +45,24 @@ class Product {
       thumbnail: json['thumbnail'] as String? ?? '',
       images: (json['images'] as List<dynamic>?)?.map((e) => e as String).toList() ?? [],
     );
+  }
+
+  /// Used for local persistence (wishlist, cart) via shared_preferences,
+  /// since we're storing a snapshot of the product rather than re-fetching
+  /// it from the API every time.
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'description': description,
+      'category': category,
+      'price': price,
+      'discountPercentage': discountPercentage,
+      'rating': rating,
+      'stock': stock,
+      'brand': brand,
+      'thumbnail': thumbnail,
+      'images': images,
+    };
   }
 }

@@ -6,6 +6,7 @@ import '../../../core/router/app_routes.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../home/widgets/product_card.dart';
 import '../../product/providers/product_provider.dart';
+import '../../wishlist/providers/wishlist_provider.dart';
 
 class SearchScreen extends ConsumerStatefulWidget {
   const SearchScreen({super.key});
@@ -27,6 +28,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
   Widget build(BuildContext context) {
     final query = ref.watch(searchQueryProvider);
     final resultsAsync = ref.watch(searchResultsProvider);
+    final wishlist = ref.watch(wishlistProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final subTextColor = isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight;
     final borderColor = isDark ? AppColors.darkBorder : AppColors.lightBorder;
@@ -110,13 +112,13 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                   itemCount: products.length,
                   itemBuilder: (context, index) {
                     final product = products[index];
+                    final isWishlisted = wishlist.any((p) => p.id == product.id);
                     return ProductCard(
                       product: product,
+                      isWishlisted: isWishlisted,
                       onTap: () => context.push('${AppRoutes.productDetails}/${product.id}'),
                       onWishlistTap: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Wishlist coming soon')),
-                        );
+                        ref.read(wishlistProvider.notifier).toggle(product);
                       },
                     );
                   },

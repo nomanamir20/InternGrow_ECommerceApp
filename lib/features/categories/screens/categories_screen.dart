@@ -6,6 +6,7 @@ import '../../../core/router/app_routes.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../home/widgets/product_card.dart';
 import '../../product/providers/product_provider.dart';
+import '../../wishlist/providers/wishlist_provider.dart';
 
 class CategoriesScreen extends ConsumerStatefulWidget {
   final String? initialCategory;
@@ -28,8 +29,6 @@ class _CategoriesScreenState extends ConsumerState<CategoriesScreen> {
   @override
   void didUpdateWidget(covariant CategoriesScreen oldWidget) {
     super.didUpdateWidget(oldWidget);
-    // If Home pushes a different category (e.g. tapping a different chip
-    // while already on this tab), reflect that change.
     if (widget.initialCategory != oldWidget.initialCategory) {
       setState(() => _selectedCategory = widget.initialCategory);
     }
@@ -121,6 +120,7 @@ class _CategoryProductGrid extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final productsAsync = ref.watch(productsByCategoryProvider(category));
+    final wishlist = ref.watch(wishlistProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final subTextColor = isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight;
 
@@ -142,13 +142,13 @@ class _CategoryProductGrid extends ConsumerWidget {
           itemCount: products.length,
           itemBuilder: (context, index) {
             final product = products[index];
+            final isWishlisted = wishlist.any((p) => p.id == product.id);
             return ProductCard(
               product: product,
+              isWishlisted: isWishlisted,
               onTap: () => context.push('${AppRoutes.productDetails}/${product.id}'),
               onWishlistTap: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Wishlist coming soon')),
-                );
+                ref.read(wishlistProvider.notifier).toggle(product);
               },
             );
           },

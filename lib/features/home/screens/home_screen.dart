@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/router/app_routes.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../product/providers/product_provider.dart';
+import '../../wishlist/providers/wishlist_provider.dart';
 import '../widgets/product_card.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -14,6 +15,7 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final productsAsync = ref.watch(productsProvider);
     final categoriesAsync = ref.watch(categoriesProvider);
+    final wishlist = ref.watch(wishlistProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final subTextColor = isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight;
 
@@ -28,7 +30,6 @@ class HomeScreen extends ConsumerWidget {
         },
         child: CustomScrollView(
           slivers: [
-            // Search bar (tapping navigates to the real Search screen)
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
@@ -55,7 +56,6 @@ class HomeScreen extends ConsumerWidget {
               ),
             ),
 
-            // Category quick-access row
             SliverToBoxAdapter(
               child: SizedBox(
                 height: 40,
@@ -96,14 +96,13 @@ class HomeScreen extends ConsumerWidget {
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
                       final product = products[index];
+                      final isWishlisted = wishlist.any((p) => p.id == product.id);
                       return ProductCard(
                         product: product,
+                        isWishlisted: isWishlisted,
                         onTap: () => context.push('${AppRoutes.productDetails}/${product.id}'),
-                        // TODO: wire real wishlist provider in the Wishlist step.
                         onWishlistTap: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Wishlist coming soon')),
-                          );
+                          ref.read(wishlistProvider.notifier).toggle(product);
                         },
                       );
                     },

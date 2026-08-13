@@ -12,7 +12,7 @@
 ## ✨ Features
 
 - [X] Product Listing
-- [ ] Product Details
+- [x] Product Details
 - [x] Categories
 - [x] Search
 - [ ] Wishlist
