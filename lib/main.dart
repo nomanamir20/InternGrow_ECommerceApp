@@ -6,6 +6,7 @@ import 'package:url_strategy/url_strategy.dart';
 import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
 import 'core/theme/theme_provider.dart';
+import 'core/utils/app_messenger.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -29,6 +30,7 @@ class InternGrowEcommerceApp extends ConsumerWidget {
     return MaterialApp.router(
       title: 'InternGrow Shop',
       debugShowCheckedModeBanner: false,
+      scaffoldMessengerKey: appMessengerKey,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: themeMode,
