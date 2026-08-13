@@ -14,7 +14,7 @@
 - [X] Product Listing
 - [ ] Product Details
 - [x] Categories
-- [ ] Search
+- [x] Search
 - [ ] Wishlist
 - [ ] Shopping Cart
 - [ ] Checkout UI
