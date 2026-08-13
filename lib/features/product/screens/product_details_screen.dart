@@ -25,13 +25,17 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     final productAsync = ref.watch(productDetailsProvider(widget.productId));
+    // FIX: watch the state (the list), not the notifier — watching
+    // .notifier only gives you the object reference, which never changes,
+    // so the widget never rebuilt when the wishlist actually updated.
+    final wishlist = ref.watch(wishlistProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final subTextColor = isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight;
 
     return Scaffold(
       body: productAsync.when(
         data: (product) {
-          final isWishlisted = ref.watch(wishlistProvider.notifier).isWishlisted(product.id);
+          final isWishlisted = wishlist.any((p) => p.id == product.id);
           final images = product.images.isNotEmpty ? product.images : [product.thumbnail];
 
           return CustomScrollView(
@@ -228,7 +232,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 100), // space for the bottom bar
+                      const SizedBox(height: 100),
                     ],
                   ),
                 ),
@@ -257,7 +261,13 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                             content: Text('${product.title} added to cart'),
                             action: SnackBarAction(
                               label: 'View Cart',
-                              onPressed: () => context.push(AppRoutes.cart),
+                              // FIX: use go() instead of push() — Cart lives
+                              // inside the bottom-nav shell, so push() tried
+                              // to create a duplicate instance of a screen
+                              // that already exists in the shell's stack,
+                              // causing a GlobalKey collision. go() properly
+                              // switches to that tab instead.
+                              onPressed: () => context.go(AppRoutes.cart),
                             ),
                           ),
                         );
