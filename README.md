@@ -16,7 +16,7 @@
 - [x] Categories
 - [x] Search
 - [x] Wishlist
-- [ ] Shopping Cart
+- [x] Shopping Cart
 - [ ] Checkout UI
 - [ ] User Profile
 
