@@ -10,6 +10,8 @@ import '../../features/product/screens/product_details_screen.dart';
 import '../../features/wishlist/screens/wishlist_screen.dart';
 import '../../features/cart/screens/cart_screen.dart';
 import '../../features/checkout/screens/checkout_screen.dart';
+import '../../features/checkout/screens/order_confirmation_screen.dart';
+import '../../features/orders/models/order_model.dart';
 import '../../features/profile/screens/profile_screen.dart';
 import '../../features/orders/screens/order_history_screen.dart';
 import '../../shared/widgets/splash_screen.dart';
@@ -35,7 +37,6 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) => const SignUpScreen(),
     ),
 
-    // Screens pushed on top of the bottom-nav shell (full-screen, no tabs visible)
     GoRoute(
       path: AppRoutes.search,
       parentNavigatorKey: _rootNavigatorKey,
@@ -55,12 +56,19 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) => const CheckoutScreen(),
     ),
     GoRoute(
+      path: AppRoutes.orderConfirmation,
+      parentNavigatorKey: _rootNavigatorKey,
+      builder: (context, state) {
+        final order = state.extra as Order;
+        return OrderConfirmationScreen(order: order);
+      },
+    ),
+    GoRoute(
       path: AppRoutes.orderHistory,
       parentNavigatorKey: _rootNavigatorKey,
       builder: (context, state) => const OrderHistoryScreen(),
     ),
 
-    // The 5-tab bottom navigation shell
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
         return ScaffoldWithNavBar(navigationShell: navigationShell);

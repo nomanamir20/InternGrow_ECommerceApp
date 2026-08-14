@@ -17,12 +17,12 @@
 - [x] Search
 - [x] Wishlist
 - [x] Shopping Cart
-- [ ] Checkout UI
+- [x] Checkout UI
 - [ ] User Profile
 
 ### Upgrade Features
 - [X] API Integration (DummyJSON)
-- [ ] Payment Gateway UI
+- [x] Payment Gateway UI
 - [ ] Push Notifications
 - [ ] Order History
 
