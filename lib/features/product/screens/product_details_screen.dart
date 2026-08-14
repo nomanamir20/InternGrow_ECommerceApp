@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../../core/utils/app_messenger.dart';
 import '../../../core/router/app_routes.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../cart/providers/cart_provider.dart';
@@ -252,20 +251,11 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
             child: SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
-               onPressed: product.stock == 0
+              onPressed: product.stock == 0
                     ? null
                     : () {
                         ref.read(cartProvider.notifier).addToCart(product, quantity: _quantity);
-                        showAppSnackBar(
-                          SnackBar(
-                            content: Text('${product.title} added to cart'),
-                            duration: const Duration(seconds: 3),
-                            action: SnackBarAction(
-                              label: 'View Cart',
-                              onPressed: () => context.go(AppRoutes.cart),
-                            ),
-                          ),
-                        );
+                        context.go(AppRoutes.cart);
                       },
                 icon: const Icon(Icons.shopping_cart_outlined),
                 label: Text(product.stock == 0 ? 'Out of Stock' : 'Add to Cart'),
