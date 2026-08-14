@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
 import '../../../core/router/app_routes.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../cart/providers/cart_provider.dart';
@@ -21,12 +22,33 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
   int _imageIndex = 0;
   int _quantity = 1;
 
+  Future<void> _showAddedToCartDialog(BuildContext context, String productTitle) async {
+    await showDialog<void>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        icon: const Icon(Icons.check_circle, color: AppColors.success, size: 48),
+        title: const Text('Added to Cart'),
+        content: Text('$productTitle has been added to your cart.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: const Text('Continue Shopping'),
+          ),
+          FilledButton(
+            onPressed: () {
+              Navigator.of(dialogContext).pop();
+              context.go(AppRoutes.cart);
+            },
+            child: const Text('View Cart'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final productAsync = ref.watch(productDetailsProvider(widget.productId));
-    // FIX: watch the state (the list), not the notifier — watching
-    // .notifier only gives you the object reference, which never changes,
-    // so the widget never rebuilt when the wishlist actually updated.
     final wishlist = ref.watch(wishlistProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final subTextColor = isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight;
@@ -251,11 +273,11 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
             child: SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
-              onPressed: product.stock == 0
+                onPressed: product.stock == 0
                     ? null
                     : () {
                         ref.read(cartProvider.notifier).addToCart(product, quantity: _quantity);
-                        context.go(AppRoutes.cart);
+                        _showAddedToCartDialog(context, product.title);
                       },
                 icon: const Icon(Icons.shopping_cart_outlined),
                 label: Text(product.stock == 0 ? 'Out of Stock' : 'Add to Cart'),
