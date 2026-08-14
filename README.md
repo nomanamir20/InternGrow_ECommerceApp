@@ -18,7 +18,7 @@
 - [x] Wishlist
 - [x] Shopping Cart
 - [x] Checkout UI
-- [ ] User Profile
+- [x] User Profile
 
 ### Upgrade Features
 - [X] API Integration (DummyJSON)
