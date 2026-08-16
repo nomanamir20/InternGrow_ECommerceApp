@@ -24,7 +24,7 @@
 - [X] API Integration (DummyJSON)
 - [x] Payment Gateway UI
 - [ ] Push Notifications
-- [ ] Order History
+- [x] Order History
 
 ---
 
