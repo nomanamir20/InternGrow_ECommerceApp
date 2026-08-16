@@ -139,10 +139,10 @@ class OrderConfirmationScreen extends ConsumerWidget {
                     ),
 
                     const SizedBox(height: 32),
-                    SizedBox(
+                  SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () => context.go(AppRoutes.orderHistory),
+                        onPressed: () => context.push(AppRoutes.orderHistory),
                         child: const Text('View Order History'),
                       ),
                     ),
