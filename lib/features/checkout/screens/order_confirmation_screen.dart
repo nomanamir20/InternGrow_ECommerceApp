@@ -1,31 +1,83 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/router/app_routes.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../orders/models/order_model.dart';
+import '../../orders/providers/order_provider.dart';
 
-class OrderConfirmationScreen extends StatelessWidget {
-  final Order order;
+class OrderConfirmationScreen extends ConsumerWidget {
+  final String orderId;
 
-  const OrderConfirmationScreen({super.key, required this.order});
+  const OrderConfirmationScreen({super.key, required this.orderId});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final orders = ref.watch(ordersProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final subTextColor = isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight;
 
+    Order? foundOrder;
+    for (final o in orders) {
+      if (o.id == orderId) {
+        foundOrder = o;
+        break;
+      }
+    }
+
+    if (foundOrder == null) {
+      return Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () => context.go(AppRoutes.home),
+          ),
+        ),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.receipt_long_outlined, size: 48, color: subTextColor),
+                const SizedBox(height: 12),
+                Text(
+                  'Order not found.',
+                  style: TextStyle(color: subTextColor),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () => context.go(AppRoutes.home),
+                  child: const Text('Go to Home'),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
+    // Assigning to a fresh non-nullable local guarantees Dart's analyzer
+    // promotes the type correctly for the rest of this method — avoids
+    // "unchecked_use_of_nullable_value" warnings on every field access
+    // below, which can happen depending on how the null-check was written.
+    final order = foundOrder;
+
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => context.go(AppRoutes.home),
+        ),
+      ),
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
             return SingleChildScrollView(
               padding: const EdgeInsets.all(24),
               child: ConstrainedBox(
-                // Ensures short content still centers nicely on tall
-                // screens, while allowing scrolling on short ones instead
-                // of overflowing.
                 constraints: BoxConstraints(minHeight: constraints.maxHeight - 48),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,

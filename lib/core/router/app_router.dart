@@ -11,7 +11,6 @@ import '../../features/wishlist/screens/wishlist_screen.dart';
 import '../../features/cart/screens/cart_screen.dart';
 import '../../features/checkout/screens/checkout_screen.dart';
 import '../../features/checkout/screens/order_confirmation_screen.dart';
-import '../../features/orders/models/order_model.dart';
 import '../../features/profile/screens/profile_screen.dart';
 import '../../features/orders/screens/order_history_screen.dart';
 import '../../shared/widgets/splash_screen.dart';
@@ -56,11 +55,15 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) => const CheckoutScreen(),
     ),
     GoRoute(
-      path: AppRoutes.orderConfirmation,
+      // Order ID is now a real URL path parameter, e.g. /order-confirmation/ORD-123
+      // instead of an in-memory `extra` object — this survives page
+      // refresh and browser back/forward, since the order is looked up
+      // from persisted storage by ID rather than passed by reference.
+      path: '${AppRoutes.orderConfirmation}/:orderId',
       parentNavigatorKey: _rootNavigatorKey,
       builder: (context, state) {
-        final order = state.extra as Order;
-        return OrderConfirmationScreen(order: order);
+        final orderId = state.pathParameters['orderId'] ?? '';
+        return OrderConfirmationScreen(orderId: orderId);
       },
     ),
     GoRoute(

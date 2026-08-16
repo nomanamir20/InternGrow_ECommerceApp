@@ -81,7 +81,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
 
     setState(() => _isPlacingOrder = false);
 
-    context.go(AppRoutes.orderConfirmation, extra: order);
+    context.go('${AppRoutes.orderConfirmation}/${order.id}');
   }
 
   @override
