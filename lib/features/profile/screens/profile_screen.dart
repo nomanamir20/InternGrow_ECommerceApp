@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -6,6 +7,7 @@ import '../../../core/router/app_routes.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/theme_provider.dart';
 import '../../auth/providers/auth_provider.dart';
+import '../../notifications/providers/notification_provider.dart';
 import '../../orders/providers/order_provider.dart';
 import '../../wishlist/providers/wishlist_provider.dart';
 
@@ -49,6 +51,7 @@ class ProfileScreen extends ConsumerWidget {
     final subTextColor = isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight;
     final orderCount = ref.watch(ordersProvider).length;
     final wishlistCount = ref.watch(wishlistProvider).length;
+    final fcmTokenAsync = ref.watch(fcmTokenProvider);
 
     final displayName = (user?.displayName?.isNotEmpty ?? false)
         ? user!.displayName!
@@ -60,7 +63,6 @@ class ProfileScreen extends ConsumerWidget {
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
-          // Avatar + name + email
           Row(
             children: [
               CircleAvatar(
@@ -99,7 +101,6 @@ class ProfileScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 28),
 
-          // Quick stats row
           Row(
             children: [
               Expanded(
@@ -156,6 +157,66 @@ class ProfileScreen extends ConsumerWidget {
             titleColor: AppColors.error,
             iconColor: AppColors.error,
             onTap: () => _handleLogout(context, ref),
+          ),
+
+          const SizedBox(height: 20),
+          Text(
+            'Developer',
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
+          ),
+          const SizedBox(height: 8),
+          Container(
+            padding: const EdgeInsets.all(14),
+            decoration: BoxDecoration(
+              border: Border.all(color: isDark ? AppColors.darkBorder : AppColors.lightBorder),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    const Icon(Icons.notifications_outlined, color: AppColors.primary, size: 20),
+                    const SizedBox(width: 8),
+                    const Text('Push Notification Token', style: TextStyle(fontWeight: FontWeight.w600)),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                fcmTokenAsync.when(
+                  data: (token) => token == null
+                      ? Text('Not available on this device/browser.', style: TextStyle(color: subTextColor, fontSize: 12))
+                      : Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                token,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(color: subTextColor, fontSize: 11, fontFamily: 'monospace'),
+                              ),
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.copy, size: 16),
+                              onPressed: () {
+                                Clipboard.setData(ClipboardData(text: token));
+                              },
+                            ),
+                          ],
+                        ),
+                  loading: () => const SizedBox(
+                    height: 16,
+                    width: 16,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  ),
+                  error: (_, __) => Text('Could not retrieve token.', style: TextStyle(color: subTextColor, fontSize: 12)),
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  'Copy this token into Firebase Console → Cloud Messaging → Send test message to test push notifications on this device.',
+                  style: TextStyle(color: subTextColor, fontSize: 11),
+                ),
+              ],
+            ),
           ),
 
           const SizedBox(height: 20),

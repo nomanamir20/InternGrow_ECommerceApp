@@ -23,7 +23,7 @@
 ### Upgrade Features
 - [X] API Integration (DummyJSON)
 - [x] Payment Gateway UI
-- [ ] Push Notifications
+- [x] Push Notifications
 - [x] Order History
 
 ---
