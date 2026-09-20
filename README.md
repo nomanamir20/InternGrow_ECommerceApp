@@ -10,6 +10,8 @@ Developed as part of the InternGrow Mobile Development Internship.
 📱 **Download APK:** [Latest Release (v1.0.0)](https://github.com/nomanamir20/InternGrow_ECommerceApp/releases/download/v1.0.0/app-release.apk)
 
 ---
+<img width="957" height="474" alt="image" src="https://github.com/user-attachments/assets/65b1eaf7-dbaf-4734-a1ea-ee2f29bec73d" />
+
 
 ## ✨ Features
 
