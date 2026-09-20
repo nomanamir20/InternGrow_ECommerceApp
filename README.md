@@ -115,14 +115,24 @@ flutter build web --release
 ---
 ## 📱 Screenshots
 ### Authentication
+
+
 <img width="377" height="416" alt="image" src="https://github.com/user-attachments/assets/08ddde65-0c31-4d49-8fa0-999222025ffa" />
 ### Home & Products
+
+
 <img width="377" height="418" alt="image" src="https://github.com/user-attachments/assets/1cfa6fb3-5b49-44a0-92d2-1968fb5837c5" />
 ### Product Details
+
+
 <img width="375" height="421" alt="image" src="https://github.com/user-attachments/assets/ed2b5eef-55dc-4752-ae23-fe14f685598b" />
 ### Cart
+
+
 <img width="379" height="419" alt="image" src="https://github.com/user-attachments/assets/34f61d19-8782-4715-832e-e65e8832b05e" />
-###Checkout
+### Checkout
+
+
 <img width="377" height="424" alt="image" src="https://github.com/user-attachments/assets/c5cec1f1-d92e-4709-9ae9-bdf72d009584" />
 
 ## 🔗 Demo
