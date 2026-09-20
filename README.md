@@ -1,6 +1,21 @@
 # InternGrow — E-Commerce Shopping App
 
-A Flutter-based e-commerce application designed to provide a complete online shopping experience, including product discovery, category browsing, search, wishlist management, shopping cart, checkout, order history, user authentication, and push notifications.
+A Flutter e-commerce mobile app with product browsing, cart, wishlist, checkout, Firebase authentication, REST API integration, and push notifications.
+
+Topics:
+
+flutter
+dart
+ecommerce
+mobile-app
+android
+firebase
+firebase-auth
+firebase-cloud-messaging
+rest-api
+riverpod
+dio
+shopping-app
 
 The application integrates REST APIs for product data, Firebase Authentication for user accounts, Firebase Cloud Messaging for notifications, and local storage for persistent shopping data.
 
@@ -138,6 +153,27 @@ flutter build web --release
 ## 🔗 Demo
 🌐 Web Demo: https://interngrow-ecommerce-app.vercel.app/
 📱 Android APK: [E-commerce App.zip](https://github.com/user-attachments/files/32437015/E-commerce.App.zip)
+
+## 👨‍💻 My Contribution
+
+This project was independently designed and developed by me as part of the InternGrow Mobile Development Internship.
+
+I was responsible for the complete development of the application, including:
+
+* Flutter UI and responsive screen development
+* Application navigation and routing
+* Product browsing and category functionality
+* Search and product discovery
+* Shopping cart and wishlist functionality
+* Checkout and order management workflows
+* Firebase Authentication integration
+* REST API integration using Dio
+* State management using Riverpod
+* Firebase Cloud Messaging integration
+* Local data persistence
+* Android and Web application builds
+* Testing, debugging, and overall application integration
+
 
 
 ## 📌 Status
