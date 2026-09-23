@@ -127,52 +127,6 @@ flutter build apk --release
 flutter build web --release
 ```
 
----
-## 📱 Screenshots
-
-### Authentication
-
-<p align="center">
-  <img src="screenshots/authentication.png" width="220"/>
-</p>
-
-### Home & Products
-
-<p align="center">
-  <img src="screenshots/home.png" width="220"/>
-</p>
-
-### Product Details
-
-<p align="center">
-  <img src="screenshots/product-details.png" width="220"/>
-</p>
-
-### Cart
-
-<p align="center">
-  <img src="screenshots/cart.png" width="220"/>
-</p>
-
-### Checkout
-
-<p align="center">
-  <img src="screenshots/checkout.png" width="220"/>
-</p>
-
-### Orders & Profile
-
-<p align="center">
-  <img src="screenshots/orders.png" width="220"/>
-  <img src="screenshots/profile.png" width="220"/>
-</p>
-
-
-### Checkout
-
-
-<img width="377" height="424" alt="image" src="https://github.com/user-attachments/assets/c5cec1f1-d92e-4709-9ae9-bdf72d009584" />
-
 ## 🔗 Demo
 
 🌐 Web Demo: https://interngrow-ecommerce-app.vercel.app/
