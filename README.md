@@ -129,29 +129,43 @@ flutter build web --release
 
 ---
 ## 📱 Screenshots
+
 ### Authentication
 
-
-<img width="377" height="416" alt="image" src="https://github.com/user-attachments/assets/08ddde65-0c31-4d49-8fa0-999222025ffa" />
-
-
+<p align="center">
+  <img src="screenshots/authentication.png" width="220"/>
+</p>
 
 ### Home & Products
 
-
-<img width="377" height="418" alt="image" src="https://github.com/user-attachments/assets/1cfa6fb3-5b49-44a0-92d2-1968fb5837c5" />
-
+<p align="center">
+  <img src="screenshots/home.png" width="220"/>
+</p>
 
 ### Product Details
 
-
-<img width="375" height="421" alt="image" src="https://github.com/user-attachments/assets/ed2b5eef-55dc-4752-ae23-fe14f685598b" />
-
+<p align="center">
+  <img src="screenshots/product-details.png" width="220"/>
+</p>
 
 ### Cart
 
+<p align="center">
+  <img src="screenshots/cart.png" width="220"/>
+</p>
 
-<img width="379" height="419" alt="image" src="https://github.com/user-attachments/assets/34f61d19-8782-4715-832e-e65e8832b05e" />
+### Checkout
+
+<p align="center">
+  <img src="screenshots/checkout.png" width="220"/>
+</p>
+
+### Orders & Profile
+
+<p align="center">
+  <img src="screenshots/orders.png" width="220"/>
+  <img src="screenshots/profile.png" width="220"/>
+</p>
 
 
 ### Checkout
