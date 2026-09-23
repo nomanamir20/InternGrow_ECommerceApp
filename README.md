@@ -186,6 +186,49 @@ I was responsible for the complete development of the application, including:
 
 
 
+## 📸 Screenshots
+
+### Home & Product Browsing
+
+
+<img width="375" height="418" alt="image" src="https://github.com/user-attachments/assets/50186234-d569-4b6a-9858-6ca77648697d" />
+
+
+
+### Product Details & Categories
+
+
+
+<img width="374" height="417" alt="image" src="https://github.com/user-attachments/assets/ba5be425-1571-4a48-b76f-2edac705c3a7" />
+
+
+
+### Cart & Checkout
+
+
+
+<img width="377" height="418" alt="image" src="https://github.com/user-attachments/assets/9854fdbd-8054-4b85-864d-0012a4c06ff9" />
+
+
+
+
+<img width="378" height="422" alt="image" src="https://github.com/user-attachments/assets/71b9dccd-511b-439a-8c4e-d4676e653019" />
+
+
+
+
+### Profile & Orders
+
+
+
+<img width="375" height="421" alt="image" src="https://github.com/user-attachments/assets/65a100cb-fced-410d-ba65-dab7a70b8add" />
+
+
+
+
+
+<img width="376" height="418" alt="image" src="https://github.com/user-attachments/assets/314116d8-7f3c-4a50-8779-ed223db1bfff" />
+
 ## 📌 Status
 
 ✅ Complete — all 8 core features and all 4 upgrade features implemented and tested on both Web and Android.
